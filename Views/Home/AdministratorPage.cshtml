@@ -1,0 +1,64 @@
+﻿@using Futuristic.Data;
+@using Futuristic.ViewModels;
+@using Microsoft.AspNetCore.Identity;
+@using Microsoft.EntityFrameworkCore;
+
+@{
+    ViewData["Title"] = "AdministratorPage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model AdministratorPageViewModel
+@inject UserManager<ApplicationUser> _userManager
+@inject RoleManager<IdentityRole> _roleManager
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Roles</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+            var userRoles = await _userManager.GetRolesAsync(user);
+            var Roles = new List<IdentityRole>(Model.Roles.ToList());
+
+            @foreach (var role in Roles.ToList())
+            {
+                if (role.Name == userRoles.First())
+                {
+                    Roles.Remove(role);
+                }
+            }
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>@string.Join(", ", userRoles.First())</td>
+                <td>
+                    <form method="post" action="/Home/AdministratorEditRoles">
+                        <label for="options">Choose an option:</label>
+                        <select id="options" name="roles">
+                            <option value="option1" disabled selected>@userRoles.First()</option>
+                            <option value="@Roles[0].Name">@Roles[0].Name</option>
+                            <option value="@Roles[1].Name">@Roles[1].Name</option>
+                            <option value="@Roles[2].Name">@Roles[2].Name</option>
+                        </select>
+
+                    <input type="hidden" name="userId" value="@user.Id"/>
+                    <button class="btn btn-sm btn-primary edit-role-btn">
+                        Edit Roles
+                    </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script src="~/js/AdministratorPage.js"></script>
+
+

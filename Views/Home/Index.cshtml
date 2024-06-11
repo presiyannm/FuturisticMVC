@@ -1,0 +1,118 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@{
+    var isAuthorized = User.IsInRole("Administrator") || User.IsInRole("Editor") || User.IsInRole("Uploader");
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Website</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .main {
+            flex: 1;
+        }
+
+        .card-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <!-- Navigation Bar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">NewsToday</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <!-- Removed Razor code -->
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main container mt-4">
+            @if (isAuthorized)
+            {
+                <div class="card-buttons mb-3">
+                    <a href="../Uploader/Upload" id="add-article-btn" class="btn btn-success">Add Article</a>
+                </div>
+            }
+            <div id="articles-container" class="row">
+                <div class="col-md-8">
+                    <div class="card mb-4">
+                        <img class="card-img-top" src="https://via.placeholder.com/800x400" alt="Featured News">
+                        <div class="card-body">
+                            <h5 class="card-title">Featured News Title</h5>
+                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+                            <a href="#" class="btn btn-primary">Read More</a>
+                            @if (isAuthorized)
+                            {
+                                <button class="btn btn-danger delete-article-btn">Delete Article</button>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img class="card-img-top" src="https://via.placeholder.com/400x200" alt="Secondary News">
+                        <div class="card-body">
+                            <h5 class="card-title">Secondary News Title</h5>
+                            <p class="card-text">This content is a little bit longer.</p>
+                            <a href="#" class="btn btn-primary">Read More</a>
+                            @if (isAuthorized)
+                            {
+                                <button class="btn btn-danger delete-article-btn">Delete Article</button>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img class="card-img-top" src="https://via.placeholder.com/400x200" alt="Secondary News">
+                        <div class="card-body">
+                            <h5 class="card-title">Another Secondary News Title</h5>
+                            <p class="card-text">This content is a little bit longer.</p>
+                            <a href="#" class="btn btn-primary">Read More</a>
+                            @if (isAuthorized)
+                            {
+                                <button class="btn btn-danger delete-article-btn">Delete Article</button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+
+
+
