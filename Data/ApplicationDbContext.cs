@@ -14,6 +14,8 @@ namespace Futuristic.Data
         public object ApplicationUser { get; internal set; }
         public DbSet<ApplicationUser> applicationUsers {  get; set; }  
         public DbSet<NewsArticle> articles { get; set; }
+
+        public DbSet<DeletedArticle> DeletedArticles { get; set; }
         
     }
 }

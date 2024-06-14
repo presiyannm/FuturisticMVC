@@ -1,10 +1,37 @@
-﻿@{
+﻿@using Futuristic.ViewModels
+@{
+
     ViewData["Title"] = "Home Page";
 }
 
 @{
     var isAuthorized = User.IsInRole("Administrator") || User.IsInRole("Editor") || User.IsInRole("Uploader");
+
+    NewsArticle? currentArticle = null;
+
+    NewsArticle? previousArticle = null;
+
+    NewsArticle? morePreviousArticle = null;
+
+    if (Model.NewsArticles.Count > 0)
+    {
+        currentArticle = Model.NewsArticles.Last();
+    }
+
+    if (Model.NewsArticles.Count > 1)
+    {
+        previousArticle = Model.NewsArticles[Model.NewsArticles.Count - 2];
+    }
+
+    if (Model.NewsArticles.Count > 2)
+    {
+        morePreviousArticle = Model.NewsArticles[Model.NewsArticles.Count - 3];
+    }
+ 
 }
+
+@model IndexPageViewModel
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -64,8 +91,44 @@
                     <div class="card mb-4">
                         <img class="card-img-top" src="https://via.placeholder.com/800x400" alt="Featured News">
                         <div class="card-body">
-                            <h5 class="card-title">Featured News Title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+                            <h5 class="card-title"><h5>
+                            @if(currentArticle != null)
+                            {
+                               <h5 class="card-title">@Model.NewsArticles.Last().Title</h5>
+                               <p class="card-text">@Model.NewsArticles.Last().Description</p>
+                            }
+                            else
+                            {
+                               <h5 class="card-title">There is no last Title</h5>
+                               <p class="card-text">There is no description.</p>
+                            }
+                                <a href="#" class="btn btn-primary">Read More</a>
+                            @if (isAuthorized)
+                            {
+                                <form action="/Delete/DeleteArticle" method="get">
+                                <input type="hidden" name="articleId" value="@Model.NewsArticles.Last()" />
+                                <input type="hidden" name="userName" value="@User.Identity.Name" />
+                                <button class="btn btn-danger delete-article-btn">Delete Article</button>
+                                </form>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img class="card-img-top" src="https://via.placeholder.com/400x200" alt="Secondary News">
+                        <div class="card-body">
+                            @if(previousArticle != null)
+                            {
+                                <h5 class="card-title">@Model.NewsArticles[Model.NewsArticles.Count-2].Title</h5>
+                                <p class="card-text">@Model.NewsArticles[Model.NewsArticles.Count - 2].Description</p>
+                            }
+                            else
+                            {
+                                <h5 class="card-title">There is no previous News Article</h5>
+                                <p class="card-text">There is no description</p>
+
+                            }
                             <a href="#" class="btn btn-primary">Read More</a>
                             @if (isAuthorized)
                             {
@@ -78,22 +141,16 @@
                     <div class="card mb-4">
                         <img class="card-img-top" src="https://via.placeholder.com/400x200" alt="Secondary News">
                         <div class="card-body">
-                            <h5 class="card-title">Secondary News Title</h5>
-                            <p class="card-text">This content is a little bit longer.</p>
-                            <a href="#" class="btn btn-primary">Read More</a>
-                            @if (isAuthorized)
+                            @if(morePreviousArticle != null)
                             {
-                                <button class="btn btn-danger delete-article-btn">Delete Article</button>
+                                <h5 class="card-title">@Model.NewsArticles[Model.NewsArticles.Count - 3].Title</h5>
+                                <p class="card-text">@Model.NewsArticles[Model.NewsArticles.Count - 3].Description</p>
                             }
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card mb-4">
-                        <img class="card-img-top" src="https://via.placeholder.com/400x200" alt="Secondary News">
-                        <div class="card-body">
-                            <h5 class="card-title">Another Secondary News Title</h5>
-                            <p class="card-text">This content is a little bit longer.</p>
+                            else
+                            {
+                                <h5 class="card-title">There is no more previous News Article</h5>
+                                <p class="card-text">There is no description</p>
+                            }
                             <a href="#" class="btn btn-primary">Read More</a>
                             @if (isAuthorized)
                             {

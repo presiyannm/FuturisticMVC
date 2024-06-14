@@ -7,5 +7,6 @@ namespace Futuristic.Models
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public IList<NewsArticle> NewsArticles { get; set;}
+        public IList<DeletedArticle> DeletedArticles { get; set;}
     }
 }

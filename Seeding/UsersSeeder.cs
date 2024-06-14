@@ -90,6 +90,7 @@ namespace Futuristic.Seeding
                 Email = email,
                 UserName = username,
                 EmailConfirmed = true
+
             };
 
             var result = await userManager.CreateAsync(userToRegister, password);

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
 namespace Futuristic.Controllers
 {
-    [Authorize(Roles ="Uploader")]
+    [Authorize(Roles ="Uploader, Administrator")]
     public class UploaderController : Controller
     {
         private ApplicationDbContext myDbContext;
@@ -40,7 +40,7 @@ namespace Futuristic.Controllers
 
             await myDbContext.SaveChangesAsync();
 
-            return RedirectToRoute("Home/Index");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

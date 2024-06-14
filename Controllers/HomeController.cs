@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
+using System.Data;
 using System.Diagnostics;
 
 namespace Futuristic.Controllers
@@ -35,6 +36,16 @@ namespace Futuristic.Controllers
 
         public async Task<IActionResult> Index()
         {
+            List<ApplicationUser> users = await myDbContext.Users.ToListAsync();
+
+            List<NewsArticle> newsArticles = await myDbContext.articles.ToListAsync();
+
+            var viewModel = new IndexPageViewModel
+            {
+                ApplicationUsers = users,
+                NewsArticles = newsArticles
+            };
+
             var user = await _userManager.GetUserAsync(User);
 
             if (user != null) 
@@ -49,7 +60,7 @@ namespace Futuristic.Controllers
 
             await myDbContext.SaveChangesAsync();
 
-            return View();
+            return View(viewModel);
         }
 
         public IActionResult Privacy()

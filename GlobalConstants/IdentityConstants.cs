@@ -18,7 +18,6 @@
         public const string UploaderPassword = "Uploader123/";
 
         public const string NormalUserRole = "Normal User";
-
         public const string ExampleUserEmail = "johndoe@gmail.com";
         public const string ExampleUserUsername = "john_doe";
         public const string ExampleUserPassword = "John123/";
