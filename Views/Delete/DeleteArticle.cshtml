@@ -1,2 +1,39 @@
-﻿
+﻿@using Futuristic.ViewModels;
+
+@model DeleteArticleViewModel
+
+<h2>Delete News Article</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.currentArticle.Title)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.currentArticle.Title)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.currentArticle.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.currentArticle.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.currentUser.FirstName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.currentUser.FirstName)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            <a class="btn btn-info" href="/Home/Index">Back to List</a>
+        </div>
+    }
+</div>
 

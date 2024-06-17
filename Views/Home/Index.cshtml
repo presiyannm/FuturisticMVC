@@ -102,15 +102,20 @@
                                <h5 class="card-title">There is no last Title</h5>
                                <p class="card-text">There is no description.</p>
                             }
-                                <a href="#" class="btn btn-primary">Read More</a>
-                            @if (isAuthorized)
-                            {
-                                <form action="/Delete/DeleteArticle" method="get">
-                                <input type="hidden" name="articleId" value="@Model.NewsArticles.Last()" />
-                                <input type="hidden" name="userName" value="@User.Identity.Name" />
-                                <button class="btn btn-danger delete-article-btn">Delete Article</button>
-                                </form>
-                            }
+
+                            <div class="d-flex">
+                                <a href="#" class="btn btn-primary pr-10">Read More</a>
+
+                                @if (isAuthorized)
+                                {
+                                   <form action="/Delete/DeleteArticle" method="get">
+                                       <input type="hidden" name="currentArticleId" value="@Model.NewsArticles.Last().Id" />
+                                       <input type="hidden" name="userName" value="@User.Identity.Name" />
+                                       <button class="btn btn-danger delete-article-btn">Delete Article</button>
+                                   </form>
+                                }
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
